@@ -2,35 +2,51 @@ package com.example.demo.models;
 
 import java.util.UUID;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "users")
 public class Users {
 
-	private UUID id;
-	private String name;
-	private String password;
+	@Id
+	@Column(name = "user_id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private UUID user_id;
+
+	@Column(name = "user_name", nullable = false)
+	private String user_name;
+	
+	@Column(name = "user_password", nullable = false)
+	private String user_password;
 
 	public UUID getId() {
-		this.id = UUID.fromString("cf9d1f19-ce69-4ff5-8da1-d3a9ccdbf7b2");
-		return id;
+		user_id = UUID.randomUUID();
+		return user_id;
 	}
 
 	public void setId(UUID id) {
-		this.id = id;
+		this.user_id = id;
 	}
 
 	public String getName() {
-		return name;
+		return user_name;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.user_name = name;
 	}
 
 	public String getPassword() {
-		return password;
+		return user_password;
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
+		this.user_password = password;
 	}
 
 }
