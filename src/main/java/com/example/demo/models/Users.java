@@ -20,33 +20,50 @@ public class Users {
 
 	@Column(name = "user_name", nullable = false)
 	private String user_name;
-	
+
 	@Column(name = "user_password", nullable = false)
 	private String user_password;
 
-	public UUID getId() {
-		user_id = UUID.randomUUID();
+	/**
+	 * @return the user_id
+	 */
+	public UUID getUserId() {
 		return user_id;
 	}
 
-	public void setId(UUID id) {
-		this.user_id = id;
+	/**
+	 * @param user_id the user_id to set
+	 */
+	public void setUserId(UUID user_id) {
+		this.user_id = user_id;
 	}
 
-	public String getName() {
+	/**
+	 * @return the user_name
+	 */
+	public String getUserName() {
 		return user_name;
 	}
 
-	public void setName(String name) {
-		this.user_name = name;
+	/**
+	 * @param user_name the user_name to set
+	 */
+	public void setUserName(String user_name) {
+		this.user_name = user_name;
 	}
 
-	public String getPassword() {
+	/**
+	 * @return the user_password
+	 */
+	public String getUserPassword() {
 		return user_password;
 	}
 
-	public void setPassword(String password) {
-		this.user_password = password;
+	/**
+	 * @param user_password the user_password to set
+	 */
+	public void setUserPassword(String user_password) {
+		this.user_password = user_password;
 	}
 
 }
