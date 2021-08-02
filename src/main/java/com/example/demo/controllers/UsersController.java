@@ -43,7 +43,7 @@ public class UsersController extends BaseController{
 	 @PostMapping
 	 public ResponseEntity<?> postUser(@RequestBody HashMap<String, Object> request) {
 		HashMap<String, Object> data = new HashMap<>();
-		data.put("user_name", request.get("user_name"));
+		data.put("user_email", request.get("user_email"));
 		data.put("user_password", request.get("user_password"));
 		 
 		 return this.returnResult(users_post_usecase.run(data), 201);
