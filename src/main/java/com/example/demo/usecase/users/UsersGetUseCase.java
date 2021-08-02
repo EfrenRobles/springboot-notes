@@ -1,14 +1,16 @@
 package com.example.demo.usecase.users;
 
-import java.util.Map;
+import java.util.HashMap;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 import com.example.demo.repositories.UsersRepository;
+import com.example.demo.usecase.BaseUseCaseInterface;
 
 @Configuration
-public class UsersGetUseCase {
+public class UsersGetUseCase implements BaseUseCaseInterface {
 
 	@Autowired
 	private UsersRepository user_repo;
@@ -17,7 +19,12 @@ public class UsersGetUseCase {
 		this.user_repo = user_repo;
 	}
 	
-	public Map<String, Object> run(Object data) {
-		return user_repo.getUsers();
+	@Override
+	public HashMap<String, Object> run(HashMap<String, Object> data) {
+		if (data.get("user_id") == null) {
+			return user_repo.getUsers();
+		}
+		
+		return user_repo.getUserById((UUID) data.get("user_id"));
 	}
 }

@@ -1,13 +1,13 @@
 package com.example.demo.usecase.users;
 
-import java.util.Map;
-
+import java.util.HashMap;
 import org.springframework.context.annotation.Configuration;
 
 import com.example.demo.repositories.UsersRepository;
+import com.example.demo.usecase.BaseUseCaseInterface;
 
 @Configuration
-public class UsersPostUseCase {
+public class UsersPostUseCase implements BaseUseCaseInterface {
 
 	private UsersRepository user_repo;
 
@@ -15,8 +15,9 @@ public class UsersPostUseCase {
 		this.user_repo = user_repo;
 	}
 	
-	public Map<String, Object> run (Object data) {
-		return user_repo.getUsers();
+	@Override
+	public HashMap<String, Object> run(HashMap<String, Object> data) {
+		return user_repo.createUser(data);
 	}
 	
 }

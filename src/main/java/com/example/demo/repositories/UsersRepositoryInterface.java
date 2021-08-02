@@ -1,10 +1,14 @@
 package com.example.demo.repositories;
 
-import java.util.Map;
+import java.util.HashMap;
 import java.util.UUID;
 
 public interface UsersRepositoryInterface {
-	public Map<String, Object> getUsers();
+	public HashMap<?, ?> getUsers();
 
-	public Map<String, Object> getUserById(UUID user_id);
+	public HashMap<?, ?> getUserById(UUID user_id);
+	
+	public HashMap<?, ?> createUser(HashMap<String, Object> data);
 }
+
+
