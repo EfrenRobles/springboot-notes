@@ -27,7 +27,7 @@ public class UsersRepository extends BaseReposiroty implements UsersRepositoryIn
 	@Override
 	public HashMap<String, Object> createUser(HashMap<String, Object> data) {
 		Users user = new Users();
-		user.user_email((String) data.get("user_email"));
+		user.setUserName((String) data.get("user_email"));
 		user.setUserPassword((String) data.get("user_password"));
 		
 		return this.returnSuccess(user_repo.save(user));

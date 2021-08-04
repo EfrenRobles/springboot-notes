@@ -39,47 +39,30 @@ public class Users {
 	private Timestamp updated_at;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users", cascade = CascadeType.ALL)
-	//@OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
 	private Set<Notes> notes;
 
-	/**
-	 * @return the user_id
-	 */
+	private String token;
+
 	public UUID getUserId() {
 		return user_id;
 	}
 
-	/**
-	 * @param user_id the user_id to set
-	 */
 	public void setUserId(UUID user_id) {
 		this.user_id = user_id;
 	}
 
-	/**
-	 * @return the user_name
-	 */
 	public String getUserName() {
 		return user_email;
 	}
 
-	/**
-	 * @param user_name the user_name to set
-	 */
-	public void user_email(String user_name) {
+	public void setUserName(String user_name) {
 		this.user_email = user_name;
 	}
 
-	/**
-	 * @return the user_password
-	 */
 	public String getUserPassword() {
 		return user_password;
 	}
 
-	/**
-	 * @param user_password the user_password to set
-	 */
 	public void setUserPassword(String user_password) {
 		this.user_password = user_password;
 	}
@@ -106,6 +89,14 @@ public class Users {
 
 	public void setUpdatedAt(Timestamp updated_at) {
 		this.updated_at = updated_at;
+	}
+
+	public String getUserToken() {
+		return token;
+	}
+
+	public void setUserToken(String token) {
+		this.token = token;
 	}
 
 }
