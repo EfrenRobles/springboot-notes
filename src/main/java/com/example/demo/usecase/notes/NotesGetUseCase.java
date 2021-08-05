@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
+import com.example.demo.models.Users;
 import com.example.demo.repositories.NotesRepository;
 import com.example.demo.usecase.BaseUseCaseInterface;
 
@@ -22,9 +23,9 @@ public class NotesGetUseCase implements BaseUseCaseInterface {
 	@Override
 	public HashMap<String, Object> run(HashMap<String, Object> data) {
 		if (data.get("note_id") == null) {
-			return note_repo.getNotes((UUID) data.get("user_id"));
+			return note_repo.getNotes((Users) data.get("user"));
 		}
 		
-		return note_repo.getNoteById((UUID) data.get("note_id"), (UUID) data.get("user_id"));
+		return note_repo.getNoteById((UUID) data.get("note_id"), (Users) data.get("user"));
 	}
 }

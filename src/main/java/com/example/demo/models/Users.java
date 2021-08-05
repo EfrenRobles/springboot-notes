@@ -16,6 +16,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 @Table(name = "users")
@@ -24,19 +26,21 @@ public class Users {
 	@Id
 	@Column(name = "user_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private UUID user_id;
+	private UUID userId;
 
 	@Column(name = "user_email", nullable = false)
-	private String user_email;
+	private String userName;
 
 	@Column(name = "user_password", nullable = false)
-	private String user_password;
+	private String userPassword;
 
 	@CreationTimestamp
-	private Timestamp created_at;
+	@Column(name = "created_at")
+	private Timestamp createdAt;
 
 	@UpdateTimestamp
-	private Timestamp updated_at;
+	@Column(name = "updated_at", nullable = false)
+	private Timestamp updatedAt;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users", cascade = CascadeType.ALL)
 	private Set<Notes> notes;
@@ -44,27 +48,27 @@ public class Users {
 	private String token;
 
 	public UUID getUserId() {
-		return user_id;
+		return userId;
 	}
 
 	public void setUserId(UUID user_id) {
-		this.user_id = user_id;
+		this.userId = user_id;
 	}
 
 	public String getUserName() {
-		return user_email;
+		return userName;
 	}
 
 	public void setUserName(String user_name) {
-		this.user_email = user_name;
+		this.userName = user_name;
 	}
 
 	public String getUserPassword() {
-		return user_password;
+		return userPassword;
 	}
 
 	public void setUserPassword(String user_password) {
-		this.user_password = user_password;
+		this.userPassword = user_password;
 	}
 
 	public Set<Notes> getNotes() {
@@ -76,19 +80,19 @@ public class Users {
 	}
 
 	public Timestamp getCreatedAt() {
-		return created_at;
+		return createdAt;
 	}
 
 	public void setCreatedAt(Timestamp created_at) {
-		this.created_at = created_at;
+		this.createdAt = created_at;
 	}
 
 	public Timestamp getUpdatedAt() {
-		return updated_at;
+		return updatedAt;
 	}
 
 	public void setUpdatedAt(Timestamp updated_at) {
-		this.updated_at = updated_at;
+		this.updatedAt = updated_at;
 	}
 
 	public String getUserToken() {
