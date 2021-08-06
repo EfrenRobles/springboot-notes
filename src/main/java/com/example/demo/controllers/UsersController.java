@@ -3,6 +3,7 @@ package com.example.demo.controllers;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.request.login.LoginCustomRequest;
 import com.example.demo.usecase.users.UsersPostUseCase;
 
 @RestController
@@ -36,12 +38,12 @@ public class UsersController extends BaseController{
 	}
 
 	 @PostMapping
-	 public ResponseEntity<?> postUser(@RequestBody HashMap<String, Object> request) {
+	 public ResponseEntity<?> postUser(@Valid @RequestBody LoginCustomRequest request) {
 		HashMap<String, Object> data = new HashMap<>();
-		data.put("user_email", request.get("user_email"));
-		data.put("user_password", request.get("user_password"));
+		data.put("user_email", request.getUserEmail());
+		data.put("user_password", request.getUserPassword());
 		 
-		return this.returnResult(users_post_usecase.run(data), 201);
+		return this.returnResult(users_post_usecase.run(data), HttpStatus.ACCEPTED);
 	 }
 	 
 }

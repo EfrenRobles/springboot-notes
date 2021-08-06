@@ -3,6 +3,7 @@ package com.example.demo.repositories;
 import java.util.HashMap;
 import java.util.UUID;
 
+import com.example.demo.models.Notes;
 import com.example.demo.models.Users;
 
 public interface NotesRepositoryInterface {
@@ -11,6 +12,10 @@ public interface NotesRepositoryInterface {
 	public HashMap<?, ?> getNoteById(UUID note_id, Users user);
 	
 	public HashMap<?, ?> createNote(HashMap<String, Object> data);
+
+	public HashMap<?, ?> updateNote(Notes note);
+
+	public HashMap<?, ?> deleteNote(Notes note);
 }
 
 

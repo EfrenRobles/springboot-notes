@@ -1,8 +1,16 @@
-spring:  
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-exception: false
+    
+spring:
+  
   jpa:  
     hibernate:  
       ddl-auto: update
-    database-platform: org.hibernate.dialect.PostgreSQLDialect  
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+      
   datasource:  
     url: "jdbc:postgresql://localhost:5432/leo_db"  
     username: admin

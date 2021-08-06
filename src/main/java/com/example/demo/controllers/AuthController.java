@@ -5,32 +5,37 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.models.Users;
+import com.example.demo.request.login.LoginCustomRequest;
+
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 @RestController
+@Validated
 public class AuthController extends BaseController {
 
 	@PostMapping("login")
-	public ResponseEntity<?> login(@RequestParam("username") String username, @RequestParam("password") String password) {
+	public ResponseEntity<?> login(@Valid @RequestBody LoginCustomRequest request) {
 		HashMap<String, Object> data = new HashMap<>();
-		Users user = getUser(username);
+		Users user = getUser(request.getUserEmail());
 		
 		boolean pass = (user == null);
 	
 		if  (! pass) {
-			pass = ! BCrypt.checkpw(password, user.getUserPassword());
+			pass = ! BCrypt.checkpw(request.getUserPassword(), user.getUserPassword());
 		}
 		
 		if (pass) {
@@ -41,9 +46,8 @@ public class AuthController extends BaseController {
 			return new ResponseEntity<>(data, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		String token = getJWTToken(username);
+		String token = getJWTToken(user.getUserName());
 		
-		data = new HashMap<>();
 		data.put("status", "SUCCESS");
 		data.put("access_token", token);
 		

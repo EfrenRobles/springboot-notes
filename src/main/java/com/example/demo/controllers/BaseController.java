@@ -17,21 +17,13 @@ public abstract class BaseController {
 	@Autowired
 	private UsersInterface user_repo;
 	
-	protected ResponseEntity<?> returnResult(HashMap<String, Object> result, int http_staus) {
+	protected ResponseEntity<?> returnResult(HashMap<String, Object> result, HttpStatus accepted) {
 
 		if (!result.get("status").equals("SUCCESS")) {
-			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(result, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
-		if (http_staus == 201) {
-			return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
-		}
-
-		if (http_staus == 203) {
-			return new ResponseEntity<>(result, HttpStatus.NO_CONTENT);
-		}
-
-		return new ResponseEntity<>(result, HttpStatus.OK);
+		return new ResponseEntity<>(result, accepted);
 	}
 	
 	protected Users getUser(HttpServletRequest request) {

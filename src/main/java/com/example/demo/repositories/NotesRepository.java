@@ -2,6 +2,7 @@ package com.example.demo.repositories;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,17 @@ public class NotesRepository extends BaseReposiroty implements NotesRepositoryIn
 		note.setNoteMessage((String) data.get("note_message"));
 		
 		return this.returnSuccess(note_repo.save(note));
+	}
 
+	@Override
+	public HashMap<String, Object> updateNote(Notes note) {
+		return this.returnSuccess(note_repo.save(note));
+	}
+
+	@Override
+	public HashMap<String, Object> deleteNote(Notes note) {
+		note_repo.delete(note);
+		return this.returnSuccess(null);
 	}
 
 }
