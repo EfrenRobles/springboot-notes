@@ -30,12 +30,12 @@ public class AuthController extends BaseController {
 	@PostMapping("login")
 	public ResponseEntity<?> login(@Valid @RequestBody LoginCustomRequest request) {
 		HashMap<String, Object> data = new HashMap<>();
-		Users user = getUser(request.getUserEmail());
+		Users user = getUser(request.getEmail());
 		
 		boolean pass = (user == null);
 	
 		if  (! pass) {
-			pass = ! BCrypt.checkpw(request.getUserPassword(), user.getUserPassword());
+			pass = ! BCrypt.checkpw(request.getPassword(), user.getUserPassword());
 		}
 		
 		if (pass) {

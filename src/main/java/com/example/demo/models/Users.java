@@ -28,7 +28,7 @@ public class Users {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID userId;
 
-	@Column(name = "user_email", nullable = false)
+	@Column(name = "user_email", nullable = false, unique = true)
 	private String userName;
 
 	@Column(name = "user_password", nullable = false)

@@ -17,11 +17,7 @@ public class NotesDeleteUseCase implements BaseUseCaseInterface {
 
 	@Autowired
 	private NotesRepository note_repo;
-	
-	public NotesDeleteUseCase(NotesRepository note_repo) {
-		this.note_repo = note_repo;
-	}
-	
+
 	@Override
 	public HashMap<String, Object> run(HashMap<String, Object> data) {
 		HashMap<String, Object> result = note_repo.getNoteById((UUID) data.get("note_id"), (Users) data.get("user"));

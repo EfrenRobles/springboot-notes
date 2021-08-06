@@ -29,6 +29,10 @@ public class LeoApiApplication {
 				.authorizeRequests()
 				.antMatchers(HttpMethod.POST, "/login")
 				.permitAll()
+				.and()
+				.authorizeRequests()
+				.antMatchers(HttpMethod.POST, "/users")
+				.permitAll()				
 				.anyRequest()
 				.authenticated();
 		}

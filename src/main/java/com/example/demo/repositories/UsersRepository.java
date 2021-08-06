@@ -14,6 +14,24 @@ public class UsersRepository extends BaseReposiroty implements UsersRepositoryIn
 	@Autowired
 	private UsersInterface user_repo;
 
+    @Override
+    public HashMap<String, Object> findByUserName(String user_name) {
+		HashMap<String, Object> response = new HashMap<>();
+    	Users user = user_repo.findByUserName(user_name);
+    	
+    	if (user == null) {
+			response.put("status", "ERROR");
+			response.put("result", "User does not exist");
+			
+			return response;
+    	}
+
+    	response.put("status", "SUCCESS");
+		response.put("result", user);
+    	
+        return returnSuccess(response);
+    }
+	
 	@Override
 	public HashMap<String, Object> createUser(HashMap<String, Object> data) {
 		
@@ -23,7 +41,7 @@ public class UsersRepository extends BaseReposiroty implements UsersRepositoryIn
 		user.setUserName((String) data.get("user_email"));
 		user.setUserPassword(user_password);
 		
-		return this.returnSuccess(user_repo.save(user));
+		return returnSuccess(user_repo.save(user));
 
 	}
 }

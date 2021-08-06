@@ -16,11 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.request.login.LoginCustomRequest;
+import com.example.demo.request.user.UserPostCustomRequest;
 import com.example.demo.usecase.users.UsersPostUseCase;
 
 @RestController
 @RequestMapping("users")
-public class UsersController extends BaseController{
+public class UsersController extends BaseController {
 
 	@Autowired
 	private UsersPostUseCase users_post_usecase;
@@ -31,19 +32,18 @@ public class UsersController extends BaseController{
 
 	@GetMapping
 	public ResponseEntity<?> getUser(
-			@RequestParam(required = false) Object temp,
-			HttpServletRequest request
+		@RequestParam(required = false) Object temp,
+		HttpServletRequest request
 	) {
 		return new ResponseEntity<>(getUser(request), HttpStatus.OK);
 	}
 
 	 @PostMapping
-	 public ResponseEntity<?> postUser(@Valid @RequestBody LoginCustomRequest request) {
+	 public ResponseEntity<?> postUser(@Valid @RequestBody UserPostCustomRequest input) {
 		HashMap<String, Object> data = new HashMap<>();
-		data.put("user_email", request.getUserEmail());
-		data.put("user_password", request.getUserPassword());
+		data.put("user_email", input.getEmail());
+		data.put("user_password", input.getPassword());
 		 
-		return this.returnResult(users_post_usecase.run(data), HttpStatus.ACCEPTED);
+		return returnResult(users_post_usecase.run(data), HttpStatus.ACCEPTED);
 	 }
-	 
 }

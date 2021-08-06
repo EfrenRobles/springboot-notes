@@ -15,11 +15,7 @@ public class NotesGetUseCase implements BaseUseCaseInterface {
 
 	@Autowired
 	private NotesRepository note_repo;
-	
-	public NotesGetUseCase(NotesRepository note_repo) {
-		this.note_repo = note_repo;
-	}
-	
+
 	@Override
 	public HashMap<String, Object> run(HashMap<String, Object> data) {
 		if (data.get("note_id") == null) {

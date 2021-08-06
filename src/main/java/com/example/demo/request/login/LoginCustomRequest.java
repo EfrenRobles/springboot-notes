@@ -11,25 +11,22 @@ public class LoginCustomRequest  {
 	private String userEmail;
 	
 	@NotBlank
-	@Length(min = 4, max = 64)
+	@Length(min = 8, max = 64)
 	private String userPassword;
 
-	public String getUserEmail() {
+	public String getEmail() {
 		return userEmail;
 	}
 
-	public void setUserEmail(String userEmail) {
+	public void setEmail(String userEmail) {
 		this.userEmail = userEmail;
 	}
 
-	public String getUserPassword() {
+	public String getPassword() {
 		return userPassword;
 	}
 
-	public void setUserPassword(String userPassword) {
+	public void setPassword(String userPassword) {
 		this.userPassword = userPassword;
 	}
-		
-	
-	
 }

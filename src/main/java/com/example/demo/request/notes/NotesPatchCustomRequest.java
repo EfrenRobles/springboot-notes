@@ -11,18 +11,10 @@ import org.springframework.lang.NonNull;
 
 import com.sun.istack.Nullable;
 
-public class NotesPatchCustomRequest {
+public class NotesPatchCustomRequest extends NotesPostCustomRequest {
 
 	@Valid
 	private UUID id;
-
-	@NotBlank
-	@Length(max = 50)
-	private String title;
-
-	@Nullable
-	@Length(max = 1000)
-	private String note;
 
 	public UUID getId() {
 		return id;
@@ -31,21 +23,4 @@ public class NotesPatchCustomRequest {
 	public void setId(UUID id) {
 		this.id = id;
 	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getNote() {
-		return note;
-	}
-
-	public void setNote(String note) {
-		this.note = note;
-	}
-
 }
