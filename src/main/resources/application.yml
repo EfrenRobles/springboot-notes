@@ -16,4 +16,3 @@ spring:
     url: "jdbc:postgresql://localhost:5432/notes_db"  
     username: admin
     password: secret
-    
