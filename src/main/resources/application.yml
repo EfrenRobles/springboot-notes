@@ -6,12 +6,14 @@ server:
     
 spring:
   
-  jpa:  
+  jpa:
+    show-sql: true  
     hibernate:  
       ddl-auto: update
     database-platform: org.hibernate.dialect.PostgreSQLDialect
       
   datasource:  
-    url: "jdbc:postgresql://localhost:5432/leo_db"  
+    url: "jdbc:postgresql://localhost:5432/notes_db"  
     username: admin
     password: secret
+    
