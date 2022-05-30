@@ -20,7 +20,7 @@ import api.notes.request.user.UserPostCustomRequest;
 import api.notes.usecase.users.UsersPostUseCase;
 
 @RestController
-@RequestMapping("users")
+@RequestMapping("/api/v1/users")
 public class UsersController extends BaseController {
 
 	@Autowired

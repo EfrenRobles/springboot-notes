@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import api.notes.models.Users;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api/v1/")
 public class ApiController {
 
 	@GetMapping
@@ -21,7 +21,7 @@ public class ApiController {
 		return TimeUnit.MILLISECONDS.toMicros(System.currentTimeMillis());
 	}
 
-	@RequestMapping(value = "healthCheck", method = RequestMethod.GET)
+	@GetMapping("healthCheck")
 	public ResponseEntity<Object> healthCheck() {
 
 		Map<String, String> data = new HashMap<>();

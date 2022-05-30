@@ -26,7 +26,7 @@ import api.notes.usecase.notes.NotesPatchUseCase;
 import api.notes.usecase.notes.NotesPostUseCase;
 
 @RestController
-@RequestMapping("notes")
+@RequestMapping("/api/v1/notes")
 public class NotesController extends BaseController {
 
 	@Autowired
