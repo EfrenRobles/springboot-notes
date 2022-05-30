@@ -1,8 +1,8 @@
-package api.notes.repositories;
+package api.notes.dto;
 
 import java.util.HashMap;
 
-public abstract class BaseReposiroty {
+public abstract class BaseDto {
 	
 	protected HashMap<String, Object> returnSuccess (Object result) {
 		HashMap<String, Object> response = new HashMap<>();

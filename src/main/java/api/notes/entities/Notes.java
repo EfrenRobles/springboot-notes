@@ -1,4 +1,4 @@
-package api.notes.models;
+package api.notes.entities;
 
 import java.sql.Timestamp;
 import java.util.UUID;

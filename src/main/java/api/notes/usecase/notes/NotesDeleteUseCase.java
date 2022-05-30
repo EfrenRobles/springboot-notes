@@ -7,16 +7,16 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
-import api.notes.models.Notes;
-import api.notes.models.Users;
-import api.notes.repositories.NotesRepository;
+import api.notes.dto.NotesDto;
+import api.notes.entities.Notes;
+import api.notes.entities.Users;
 import api.notes.usecase.BaseUseCaseInterface;
 
 @Configuration
 public class NotesDeleteUseCase implements BaseUseCaseInterface {
 
 	@Autowired
-	private NotesRepository note_repo;
+	private NotesDto note_repo;
 
 	@Override
 	public HashMap<String, Object> run(HashMap<String, Object> data) {

@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import api.notes.models.Users;
-import api.notes.models.UsersInterface;
+import api.notes.entities.Users;
+import api.notes.entities.UsersInterface;
 
 public abstract class BaseController {
 	

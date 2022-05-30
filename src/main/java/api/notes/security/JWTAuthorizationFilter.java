@@ -1,4 +1,4 @@
-package api.notes.config;
+package api.notes.security;
 
 import java.io.IOException;
 import java.util.List;
@@ -22,11 +22,12 @@ import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
-
 	private final String HEADER = "Authorization";
 	private final String PREFIX = "Bearer ";
 	private final String SECRET = "mySecretKey";
 
+	
+	
 	@Override
 	protected void doFilterInternal(
 		HttpServletRequest request,
@@ -35,7 +36,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 	) throws ServletException, IOException {
 		try {
 
-			if (! existeJWTToken(request, response)) {
+			if (! existJWTToken(request, response)) {
 				SecurityContextHolder.clearContext();
 				return;
 			}
@@ -64,6 +65,16 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 			.getBody();
 	}
 
+	private boolean existJWTToken(HttpServletRequest request, HttpServletResponse res) {
+		String authenticationHeader = request.getHeader(HEADER);
+		
+		if (authenticationHeader == null || !authenticationHeader.startsWith(PREFIX)) {
+			return false;
+		}
+		
+		return true;
+	}
+
 	/**
 	 * To authenticate inside of the flow of Spring
 	 * 
@@ -87,15 +98,4 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 			.getContext()
 			.setAuthentication(auth);
 	}
-
-	private boolean existeJWTToken(HttpServletRequest request, HttpServletResponse res) {
-		String authenticationHeader = request.getHeader(HEADER);
-		
-		if (authenticationHeader == null || !authenticationHeader.startsWith(PREFIX)) {
-			return false;
-		}
-		
-		return true;
-	}
-
 }

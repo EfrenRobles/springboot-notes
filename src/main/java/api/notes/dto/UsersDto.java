@@ -1,20 +1,19 @@
-package api.notes.repositories;
+package api.notes.dto;
 
 import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
-import api.notes.models.Users;
-import api.notes.models.UsersInterface;
+import api.notes.entities.Users;
+import api.notes.entities.UsersInterface;
 
 @Configuration
-public class UsersRepository extends BaseReposiroty implements UsersRepositoryInterface {
+public class UsersDto extends BaseDto {
 
 	@Autowired
 	private UsersInterface user_repo;
 
-    @Override
     public HashMap<String, Object> findByUserName(String user_name) {
 		HashMap<String, Object> response = new HashMap<>();
     	Users user = user_repo.findByUserName(user_name);
@@ -32,7 +31,6 @@ public class UsersRepository extends BaseReposiroty implements UsersRepositoryIn
         return returnSuccess(response);
     }
 	
-	@Override
 	public HashMap<String, Object> createUser(HashMap<String, Object> data) {
 		
 		String user_password = BCrypt.hashpw((String) data.get("user_password"), BCrypt.gensalt());

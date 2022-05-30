@@ -4,14 +4,14 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
-import api.notes.repositories.UsersRepository;
+import api.notes.dto.UsersDto;
 import api.notes.usecase.BaseUseCaseInterface;
 
 @Configuration
 public class UsersPostUseCase implements BaseUseCaseInterface {
 
 	@Autowired
-	private UsersRepository user_repo;
+	private UsersDto user_repo;
 	
 	@Override
 	public HashMap<String, Object> run(HashMap<String, Object> data) {

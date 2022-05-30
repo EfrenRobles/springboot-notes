@@ -1,4 +1,4 @@
-package api.notes.models;
+package api.notes.entities;
 
 import java.util.List;
 import java.util.Optional;

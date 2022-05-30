@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import api.notes.models.Users;
+import api.notes.entities.Users;
 
 @RestController
 @RequestMapping("/api/v1/")
