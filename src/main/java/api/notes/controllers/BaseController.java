@@ -9,13 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import api.notes.entities.Users;
-import api.notes.entities.UsersInterface;
+import api.notes.entities.UsersEntiry;
+import api.notes.repositories.UsersRepository;
 
 public abstract class BaseController {
 	
 	@Autowired
-	private UsersInterface user_repo;
+	private UsersRepository user_repo;
 	
 	protected ResponseEntity<?> returnResult(HashMap<String, Object> result, HttpStatus accepted) {
 
@@ -26,12 +26,12 @@ public abstract class BaseController {
 		return new ResponseEntity<>(result, accepted);
 	}
 	
-	protected Users getUser(HttpServletRequest request) {
+	protected UsersEntiry getUser(HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
         return user_repo.findByUserName(principal.getName());
 	}
 	
-	protected Users getUser(String request) {
+	protected UsersEntiry getUser(String request) {
         return user_repo.findByUserName(request);
 	}	
 }

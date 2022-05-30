@@ -21,7 +21,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 @Table(name = "users")
-public class Users {
+public class UsersEntiry {
 
 	@Id
 	@Column(name = "user_id")
@@ -43,7 +43,7 @@ public class Users {
 	private Timestamp updatedAt;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users", cascade = CascadeType.ALL)
-	private Set<Notes> notes;
+	private Set<NotesEntity> notes;
 
 	private String token;
 
@@ -71,11 +71,11 @@ public class Users {
 		this.userPassword = user_password;
 	}
 
-	public Set<Notes> getNotes() {
+	public Set<NotesEntity> getNotes() {
 		return notes;
 	}
 
-	public void setNotes(Set<Notes> notes) {
+	public void setNotes(Set<NotesEntity> notes) {
 		this.notes = notes;
 	}
 

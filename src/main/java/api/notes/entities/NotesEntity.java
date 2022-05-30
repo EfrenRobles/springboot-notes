@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "notes")
-public class Notes {
+public class NotesEntity {
 	@Id
 	@Column(name = "note_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -44,7 +44,7 @@ public class Notes {
 	@JoinColumn(name = "user_id", referencedColumnName="user_id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonBackReference  
-	private Users users;
+	private UsersEntiry users;
 
 	public UUID getNoteID() {
 		return noteId;
@@ -70,12 +70,12 @@ public class Notes {
 		this.note_message = note_message;
 	}
 	
-    public Users getUsers()
+    public UsersEntiry getUsers()
     {
         return users;
     }
 
-    public void setUsers(Users users)
+    public void setUsers(UsersEntiry users)
     {
         this.users = users;
     }

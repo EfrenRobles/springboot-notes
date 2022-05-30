@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import api.notes.entities.Users;
+import api.notes.entities.UsersEntiry;
 import api.notes.request.login.LoginCustomRequest;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -29,7 +29,7 @@ public class AuthController extends BaseController {
 	@PostMapping("login")
 	public ResponseEntity<?> login(@Valid @RequestBody LoginCustomRequest request) {
 		HashMap<String, Object> data = new HashMap<>();
-		Users user = getUser(request.getEmail());
+		UsersEntiry user = getUser(request.getEmail());
 		
 		boolean pass = (user == null);
 	

@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 import api.notes.dto.NotesDto;
-import api.notes.entities.Notes;
-import api.notes.entities.Users;
+import api.notes.entities.NotesEntity;
+import api.notes.entities.UsersEntiry;
 import api.notes.usecase.BaseUseCaseInterface;
 
 @Configuration
@@ -20,7 +20,7 @@ public class NotesPatchUseCase implements BaseUseCaseInterface {
 
 	@Override
 	public HashMap<String, Object> run(HashMap<String, Object> data) {
-		HashMap<String, Object> result = note_repo.getNoteById((UUID) data.get("note_id"), (Users) data.get("user"));
+		HashMap<String, Object> result = note_repo.getNoteById((UUID) data.get("note_id"), (UsersEntiry) data.get("user"));
 		
 		Optional object_result = (Optional) result.get("result");
 		
@@ -32,7 +32,7 @@ public class NotesPatchUseCase implements BaseUseCaseInterface {
 			return response;
 		}
 		
-		Notes note = (Notes) object_result.get();
+		NotesEntity note = (NotesEntity) object_result.get();
 		note.setNoteTitle((String) data.get("note_title"));
 		note.setNoteMessage((String) data.get("note_message"));
 
