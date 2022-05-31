@@ -10,7 +10,7 @@ import api.notes.entities.NotesEntity;
 import api.notes.entities.UsersEntiry;
 
 public interface NotesRepository extends JpaRepository<NotesEntity, UUID> {
-	public Optional<NotesEntity> findByNoteIdAndUsers(UUID note_id, UsersEntiry user);
+	public NotesEntity findByNoteIdAndUsers(UUID note_id, UsersEntiry user);
 
 	public List<NotesEntity> findByUsers(UsersEntiry user);
 }

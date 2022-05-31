@@ -1,48 +1,64 @@
 package api.notes.services;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Service;
 
 import api.notes.entities.NotesEntity;
 import api.notes.entities.UsersEntiry;
 import api.notes.repositories.NotesRepository;
-import api.notes.repositories.UsersRepository;
+import api.notes.request.notes.NotesPatchCustomRequest;
+import api.notes.request.notes.NotesPostCustomRequest;
 
-@Configuration
-public class NotesService extends BaseService {
+@Service
+public class NotesService {
 
 	@Autowired
 	private NotesRepository note_repo;
 
-	public LinkedHashMap<String, Object> getNotes(UsersEntiry user) {
-		return this.returnSuccess(note_repo.findByUsers(user));
+	public List<NotesEntity> getNotesFromUser(UsersEntiry user) {
+		return  note_repo.findByUsers(user);
 	}
-
-	public LinkedHashMap<String, Object> getNoteById(UUID note_id, UsersEntiry user) {
-		return this.returnSuccess(note_repo.findByNoteIdAndUsers(note_id, user));
+	
+	public NotesEntity getNotesFromUserWithId(UUID note_id, UsersEntiry user) {
+		return note_repo.findByNoteIdAndUsers(note_id, user);
 	}
-
-	public LinkedHashMap<String, Object> createNote(LinkedHashMap<String, Object> data) {
+	
+	public NotesEntity add(NotesPostCustomRequest input, UsersEntiry user) {
 		NotesEntity note = new NotesEntity();
-		note.setUsers((UsersEntiry) data.get("user"));
-		note.setNoteTitle((String) data.get("note_title"));
-		note.setNoteMessage((String) data.get("note_message"));
+		note.setUsers(user);		
+		note.setNoteTitle(input.getTitle());
+		note.setNoteMessage(input.getNote());
 		
-		return this.returnSuccess(note_repo.save(note));
+		return note_repo.save(note);
 	}
 
-	public LinkedHashMap<String, Object> updateNote(NotesEntity note) {
-		return this.returnSuccess(note_repo.save(note));
-	}
+	public NotesEntity update(UUID id, NotesPatchCustomRequest input, UsersEntiry user) {
+		
+		NotesEntity note = note_repo.findByNoteIdAndUsers(id, user);
+		
+		if (note == null) {
+			return null;
+		}
 
-	public LinkedHashMap<String, Object> deleteNote(NotesEntity note) {
+		note.setNoteTitle(input.getTitle());
+		note.setNoteMessage(input.getNote());
+
+		return note_repo.save(note);
+	}	
+	
+	public Boolean deleteByIdWithUser(UUID id, UsersEntiry user) {
+		
+		NotesEntity note = note_repo.findByNoteIdAndUsers(id, user);
+		
+		if (note == null) {
+			return false;
+		}
+
 		note_repo.delete(note);
-		return this.returnSuccess(null);
-	}
 
+		return (getNotesFromUserWithId(id, user) == null);
+	}
 }

@@ -12,72 +12,73 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import api.notes.entities.UsersEntiry;
 import api.notes.request.notes.NotesPatchCustomRequest;
 import api.notes.request.notes.NotesPostCustomRequest;
-import api.notes.usecase.notes.NotesDeleteUseCase;
-import api.notes.usecase.notes.NotesGetUseCase;
-import api.notes.usecase.notes.NotesPatchUseCase;
-import api.notes.usecase.notes.NotesPostUseCase;
+import api.notes.services.NotesService;
+import api.notes.services.UsersService;
 
 @RestController
 @RequestMapping("/api/v1/notes")
 public class NotesController extends BaseResponse {
 
 	@Autowired
-	private NotesGetUseCase notes_get_usecase;
-
+	private UsersService userService;	
+	
 	@Autowired
-	private NotesPostUseCase notes_post_usecase;
+	private NotesService noteService;	
 
-	@Autowired
-	private NotesPatchUseCase notes_patch_usecase;
-
-	@Autowired
-	private NotesDeleteUseCase notes_delete_usecase;
 
 	@GetMapping
-	public ResponseEntity<?> getNote(@RequestParam(required = false) UUID id, HttpServletRequest request) {
-		LinkedHashMap<String, Object> data = new LinkedHashMap<>();
-		data.put("note_id", id);
-		data.put("user", getUser(request));
-
-		return this.returnResult(notes_get_usecase.run(data), HttpStatus.OK);
+	public ResponseEntity<?> getNote(HttpServletRequest request) {
+		return onSuccess(noteService.getNotesFromUser(userService.getUserByToken(request)), HttpStatus.OK);
 	}
 
+	@GetMapping("/{id}")
+	public ResponseEntity<?> getNote(@PathVariable UUID id, HttpServletRequest request) {
+		return onSuccess(noteService.getNotesFromUserWithId(id, userService.getUserByToken(request)), HttpStatus.OK);
+	}
+		
 	@PostMapping
 	public ResponseEntity<?> postNote(@Valid @RequestBody NotesPostCustomRequest input, HttpServletRequest request) {
-		LinkedHashMap<String, Object> data = new LinkedHashMap<>();
-		data.put("user", getUser(request));
-		data.put("note_title", input.getTitle());
-		data.put("note_message", input.getNote());
-
-		return this.returnResult(notes_post_usecase.run(data), HttpStatus.ACCEPTED);
+		return onSuccess(noteService.add(input, userService.getUserByToken(request)), HttpStatus.CREATED);
 	}
 
-	@PatchMapping
-	public ResponseEntity<?> patchNote(@Valid @RequestBody NotesPatchCustomRequest input, HttpServletRequest request) {
-		LinkedHashMap<String, Object> data = new LinkedHashMap<>();
-		data.put("user", getUser(request));
-		data.put("note_id", input.getId());
-		data.put("note_title", input.getTitle());
-		data.put("note_message", input.getNote());
+	@PatchMapping("/{id}")
+	public ResponseEntity<?> patchNote(@PathVariable UUID id, @Valid @RequestBody NotesPatchCustomRequest input, HttpServletRequest request) {
 
-		return this.returnResult(notes_patch_usecase.run(data), HttpStatus.OK);
+		Object result = noteService.update(id, input, userService.getUserByToken(request));
+		
+		if (result == null) {
+			return onFail("Note does not exist", HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+		
+		return onSuccess(
+			result,
+			HttpStatus.OK
+		);
 	}
 
-	@DeleteMapping
-	public ResponseEntity<?> deletehNote(@RequestParam UUID id, HttpServletRequest request) {
-		LinkedHashMap<String, Object> data = new LinkedHashMap<>();
-		data.put("user", getUser(request));
-		data.put("note_id", id);
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> deletehNote(@PathVariable UUID id, HttpServletRequest request) {
 
-		return this.returnResult(notes_delete_usecase.run(data), HttpStatus.NO_CONTENT);
+		Object result = noteService.deleteByIdWithUser(id, userService.getUserByToken(request));
+		
+		if (result == null) {
+			return onFail("Note does not exist", HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+		
+		return onSuccess(
+			result,
+			HttpStatus.NO_CONTENT
+		);
 	}
 
 }

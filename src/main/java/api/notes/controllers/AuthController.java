@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import api.notes.entities.UsersEntiry;
 import api.notes.request.login.LoginCustomRequest;
+import api.notes.services.UsersService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -26,23 +28,22 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Validated
 public class AuthController extends BaseResponse {
 
+	@Autowired
+	private UsersService userService;
+	
 	@PostMapping("login")
 	public ResponseEntity<?> login(@Valid @RequestBody LoginCustomRequest request) {
 		LinkedHashMap<String, Object> data = new LinkedHashMap<>();
-		UsersEntiry user = getUser(request.getEmail());
+		UsersEntiry user = userService.getUser(request.getUserEmail());
 		
 		boolean pass = (user == null);
 	
 		if  (! pass) {
-			pass = ! BCrypt.checkpw(request.getPassword(), user.getUserPassword());
+			pass = ! BCrypt.checkpw(request.getUserPassword(), user.getUserPassword());
 		}
 		
 		if (pass) {
-			data = new LinkedHashMap<>();
-			data.put("status", "ERROR");
-			data.put("error", "Username or Password does not match");
-
-			return onFail(data, HttpStatus.UNPROCESSABLE_ENTITY);
+			return onFail("Username or Password does not match", HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
 		String token = getJWTToken(user.getUserName());
