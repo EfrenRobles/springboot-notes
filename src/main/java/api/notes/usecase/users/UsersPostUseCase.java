@@ -4,14 +4,14 @@ import java.util.LinkedHashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
-import api.notes.dto.UsersDto;
+import api.notes.services.UsersService;
 import api.notes.usecase.BaseUseCaseInterface;
 
 @Configuration
 public class UsersPostUseCase implements BaseUseCaseInterface {
 
 	@Autowired
-	private UsersDto user_repo;
+	private UsersService user_repo;
 	
 	@Override
 	public LinkedHashMap<String, Object> run(LinkedHashMap<String, Object> data) {

@@ -1,4 +1,4 @@
-package api.notes.dto;
+package api.notes.services;
 
 import java.util.LinkedHashMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,7 @@ import api.notes.entities.UsersEntiry;
 import api.notes.repositories.UsersRepository;
 
 @Configuration
-public class UsersDto extends BaseDto {
+public class UsersService extends BaseService {
 
 	@Autowired
 	private UsersRepository user_repo;

@@ -1,8 +1,8 @@
-package api.notes.dto;
+package api.notes.services;
 
 import java.util.LinkedHashMap;
 
-public abstract class BaseDto {
+public abstract class BaseService {
 	
 	protected LinkedHashMap<String, Object> returnSuccess (Object result) {
 		LinkedHashMap<String, Object> response = new LinkedHashMap<>();

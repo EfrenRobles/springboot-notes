@@ -14,16 +14,13 @@ import org.springframework.http.ResponseEntity;
 import api.notes.entities.UsersEntiry;
 import api.notes.repositories.UsersRepository;
 
-public abstract class BaseController {
+public abstract class BaseResponse {
 	
+	// --------------------------------------------------------------------------------------------
+
 	@Autowired
 	private UsersRepository user_repo;
 	
-	private final String SUCCESS = "SUCCESS";
-	private final String ERROR = "ERROR";
-	private final String FAIL = "FAIL";
-	
-
 	protected UsersEntiry getUser(HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
         return user_repo.findByUserName(principal.getName());
@@ -42,23 +39,33 @@ public abstract class BaseController {
 		return new ResponseEntity<>(result, accepted);
 	}
 	
-	protected ResponseEntity<?> onSuccess (LinkedHashMap<String, Object> result, HttpStatus accepted) {
-		return seResponse(result, SUCCESS, accepted);
-	}
+	// --------------------------------------------------------------------------------------------
 	
-	protected ResponseEntity<?> onFail (LinkedHashMap<String, Object> result, HttpStatus accepted) {
-		return seResponse(result, ERROR, accepted);
-	}
+	private final String SUCCESS = "SUCCESS";
+	private final String ERROR = "ERROR";
+	private final String FAIL = "FAIL";
 	
-	protected ResponseEntity<?> onError (LinkedHashMap<String, Object> result, HttpStatus accepted) {
-		return seResponse(result, FAIL, accepted);
-	}
-	
-	private ResponseEntity<?> seResponse (Object result, String status, HttpStatus accepted) {
+	protected ResponseEntity<?> onSuccess (Object result, HttpStatus status) {
 		Map<String, Object> response = new LinkedHashMap<>();
-		response.put("status", status);
+		response.put("status", SUCCESS);
 		response.put("data", result);
 
-		return ResponseEntity.ok(response);		
+		return new ResponseEntity<>(response, status);
+	}
+	
+	protected ResponseEntity<?> onFail (Object result, HttpStatus status) {
+		return new ResponseEntity<>(setResponse(result, FAIL), status);
+	}
+	
+	protected ResponseEntity<?> onError (Object result, HttpStatus status) {
+		return new ResponseEntity<>(setResponse(result, ERROR), status);
+	}
+	
+	private Map setResponse (Object result, String status) {
+		Map<String, Object> response = new LinkedHashMap<>();
+		response.put("status", status);
+		response.put("error", result);
+
+		return response;		
 	}
 }

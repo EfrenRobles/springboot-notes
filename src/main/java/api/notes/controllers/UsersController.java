@@ -15,27 +15,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import api.notes.entities.UsersEntiry;
 import api.notes.request.login.LoginCustomRequest;
 import api.notes.request.user.UserPostCustomRequest;
 import api.notes.usecase.users.UsersPostUseCase;
 
 @RestController
 @RequestMapping("/api/v1/users")
-public class UsersController extends BaseController {
+public class UsersController extends BaseResponse {
 
 	@Autowired
 	private UsersPostUseCase users_post_usecase;
 
-	public UsersController(UsersPostUseCase users_post_usecase) {
-		this.users_post_usecase = users_post_usecase;
-	}
-
 	@GetMapping
-	public ResponseEntity<?> getUser(
-		@RequestParam(required = false) Object temp,
-		HttpServletRequest request
-	) {
-		return new ResponseEntity<>(getUser(request), HttpStatus.OK);
+	public ResponseEntity<?> getUser(HttpServletRequest request) {
+		return onSuccess(getUser(request), HttpStatus.OK);
 	}
 
 	 @PostMapping

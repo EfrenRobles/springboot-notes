@@ -1,4 +1,4 @@
-package api.notes.dto;
+package api.notes.services;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -14,7 +14,7 @@ import api.notes.repositories.NotesRepository;
 import api.notes.repositories.UsersRepository;
 
 @Configuration
-public class NotesDto extends BaseDto {
+public class NotesService extends BaseService {
 
 	@Autowired
 	private NotesRepository note_repo;

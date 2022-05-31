@@ -24,7 +24,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @RestController
 @Validated
-public class AuthController extends BaseController {
+public class AuthController extends BaseResponse {
 
 	@PostMapping("login")
 	public ResponseEntity<?> login(@Valid @RequestBody LoginCustomRequest request) {
@@ -42,15 +42,14 @@ public class AuthController extends BaseController {
 			data.put("status", "ERROR");
 			data.put("error", "Username or Password does not match");
 
-			return new ResponseEntity<>(data, HttpStatus.UNPROCESSABLE_ENTITY);
+			return onFail(data, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 
 		String token = getJWTToken(user.getUserName());
 		
-		data.put("status", "SUCCESS");
 		data.put("access_token", token);
 		
-		return new ResponseEntity<>(data, HttpStatus.OK);
+		return onSuccess(data, HttpStatus.OK);
 	}
 
 	private String getJWTToken(String username) {
