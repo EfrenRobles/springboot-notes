@@ -1,6 +1,6 @@
 package api.notes.dto;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -14,8 +14,8 @@ public class UsersDto extends BaseDto {
 	@Autowired
 	private UsersRepository user_repo;
 
-    public HashMap<String, Object> findByUserName(String user_name) {
-		HashMap<String, Object> response = new HashMap<>();
+    public LinkedHashMap<String, Object> findByUserName(String user_name) {
+		LinkedHashMap<String, Object> response = new LinkedHashMap<>();
     	UsersEntiry user = user_repo.findByUserName(user_name);
     	
     	if (user == null) {
@@ -31,7 +31,7 @@ public class UsersDto extends BaseDto {
         return returnSuccess(response);
     }
 	
-	public HashMap<String, Object> createUser(HashMap<String, Object> data) {
+	public LinkedHashMap<String, Object> createUser(LinkedHashMap<String, Object> data) {
 		
 		String user_password = BCrypt.hashpw((String) data.get("user_password"), BCrypt.gensalt());
 

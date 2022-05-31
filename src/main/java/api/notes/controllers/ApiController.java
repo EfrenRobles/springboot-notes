@@ -1,6 +1,6 @@
 package api.notes.controllers;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import api.notes.entities.UsersEntiry;
 
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/")
 public class ApiController {
 
 	@GetMapping
@@ -24,11 +24,11 @@ public class ApiController {
 	@GetMapping("healthCheck")
 	public ResponseEntity<Object> healthCheck() {
 
-		Map<String, String> data = new HashMap<>();
+		Map<String, String> data = new LinkedHashMap<>();
 		data.put("id", "EVERYTHING-IS-FINE");
 		data.put("title", "Service is working");
 
-		Map<String, Object> response = new HashMap<>();
+		Map<String, Object> response = new LinkedHashMap<>();
 		response.put("status", "SUCCESS");
 		response.put("data", data);
 

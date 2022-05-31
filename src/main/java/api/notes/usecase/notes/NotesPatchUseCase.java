@@ -1,6 +1,6 @@
 package api.notes.usecase.notes;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -19,13 +19,13 @@ public class NotesPatchUseCase implements BaseUseCaseInterface {
 	private NotesDto note_repo;
 
 	@Override
-	public HashMap<String, Object> run(HashMap<String, Object> data) {
-		HashMap<String, Object> result = note_repo.getNoteById((UUID) data.get("note_id"), (UsersEntiry) data.get("user"));
+	public LinkedHashMap<String, Object> run(LinkedHashMap<String, Object> data) {
+		LinkedHashMap<String, Object> result = note_repo.getNoteById((UUID) data.get("note_id"), (UsersEntiry) data.get("user"));
 		
 		Optional object_result = (Optional) result.get("result");
 		
 		if (object_result.isEmpty()) {
-			HashMap<String, Object> response = new HashMap<>();
+			LinkedHashMap<String, Object> response = new LinkedHashMap<>();
 			response.put("status", "ERROR");
 			response.put("result", "Note does not exist");
 			

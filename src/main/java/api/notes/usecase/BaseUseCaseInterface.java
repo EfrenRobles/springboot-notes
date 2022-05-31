@@ -1,9 +1,9 @@
 package api.notes.usecase;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public interface BaseUseCaseInterface {
 
-	public HashMap<String, Object> run(HashMap<String, Object> data);
+	public LinkedHashMap<String, Object> run(LinkedHashMap<String, Object> data);
 
 }

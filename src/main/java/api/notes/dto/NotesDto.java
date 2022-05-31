@@ -1,6 +1,6 @@
 package api.notes.dto;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -19,15 +19,15 @@ public class NotesDto extends BaseDto {
 	@Autowired
 	private NotesRepository note_repo;
 
-	public HashMap<String, Object> getNotes(UsersEntiry user) {
+	public LinkedHashMap<String, Object> getNotes(UsersEntiry user) {
 		return this.returnSuccess(note_repo.findByUsers(user));
 	}
 
-	public HashMap<String, Object> getNoteById(UUID note_id, UsersEntiry user) {
+	public LinkedHashMap<String, Object> getNoteById(UUID note_id, UsersEntiry user) {
 		return this.returnSuccess(note_repo.findByNoteIdAndUsers(note_id, user));
 	}
 
-	public HashMap<String, Object> createNote(HashMap<String, Object> data) {
+	public LinkedHashMap<String, Object> createNote(LinkedHashMap<String, Object> data) {
 		NotesEntity note = new NotesEntity();
 		note.setUsers((UsersEntiry) data.get("user"));
 		note.setNoteTitle((String) data.get("note_title"));
@@ -36,11 +36,11 @@ public class NotesDto extends BaseDto {
 		return this.returnSuccess(note_repo.save(note));
 	}
 
-	public HashMap<String, Object> updateNote(NotesEntity note) {
+	public LinkedHashMap<String, Object> updateNote(NotesEntity note) {
 		return this.returnSuccess(note_repo.save(note));
 	}
 
-	public HashMap<String, Object> deleteNote(NotesEntity note) {
+	public LinkedHashMap<String, Object> deleteNote(NotesEntity note) {
 		note_repo.delete(note);
 		return this.returnSuccess(null);
 	}

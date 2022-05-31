@@ -1,11 +1,11 @@
 package api.notes.dto;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public abstract class BaseDto {
 	
-	protected HashMap<String, Object> returnSuccess (Object result) {
-		HashMap<String, Object> response = new HashMap<>();
+	protected LinkedHashMap<String, Object> returnSuccess (Object result) {
+		LinkedHashMap<String, Object> response = new LinkedHashMap<>();
 		
 		response.put("status", "SUCCESS");
 		

@@ -1,6 +1,6 @@
 package api.notes.usecase.notes;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +15,7 @@ public class NotesPostUseCase implements BaseUseCaseInterface {
 	private NotesDto note_repo;
 
 	@Override
-	public HashMap<String, Object> run(HashMap<String, Object> data) {
+	public LinkedHashMap<String, Object> run(LinkedHashMap<String, Object> data) {
 		return note_repo.createNote(data);
 	}
 

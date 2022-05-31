@@ -1,6 +1,6 @@
 package api.notes.controllers;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,7 +43,7 @@ public class NotesController extends BaseController {
 
 	@GetMapping
 	public ResponseEntity<?> getNote(@RequestParam(required = false) UUID id, HttpServletRequest request) {
-		HashMap<String, Object> data = new HashMap<>();
+		LinkedHashMap<String, Object> data = new LinkedHashMap<>();
 		data.put("note_id", id);
 		data.put("user", getUser(request));
 
@@ -52,7 +52,7 @@ public class NotesController extends BaseController {
 
 	@PostMapping
 	public ResponseEntity<?> postNote(@Valid @RequestBody NotesPostCustomRequest input, HttpServletRequest request) {
-		HashMap<String, Object> data = new HashMap<>();
+		LinkedHashMap<String, Object> data = new LinkedHashMap<>();
 		data.put("user", getUser(request));
 		data.put("note_title", input.getTitle());
 		data.put("note_message", input.getNote());
@@ -62,7 +62,7 @@ public class NotesController extends BaseController {
 
 	@PatchMapping
 	public ResponseEntity<?> patchNote(@Valid @RequestBody NotesPatchCustomRequest input, HttpServletRequest request) {
-		HashMap<String, Object> data = new HashMap<>();
+		LinkedHashMap<String, Object> data = new LinkedHashMap<>();
 		data.put("user", getUser(request));
 		data.put("note_id", input.getId());
 		data.put("note_title", input.getTitle());
@@ -73,7 +73,7 @@ public class NotesController extends BaseController {
 
 	@DeleteMapping
 	public ResponseEntity<?> deletehNote(@RequestParam UUID id, HttpServletRequest request) {
-		HashMap<String, Object> data = new HashMap<>();
+		LinkedHashMap<String, Object> data = new LinkedHashMap<>();
 		data.put("user", getUser(request));
 		data.put("note_id", id);
 

@@ -1,6 +1,6 @@
 package api.notes.usecase.notes;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class NotesGetUseCase implements BaseUseCaseInterface {
 	private NotesDto note_repo;
 
 	@Override
-	public HashMap<String, Object> run(HashMap<String, Object> data) {
+	public LinkedHashMap<String, Object> run(LinkedHashMap<String, Object> data) {
 		if (data.get("note_id") == null) {
 			return note_repo.getNotes((UsersEntiry) data.get("user"));
 		}

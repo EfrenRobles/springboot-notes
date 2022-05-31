@@ -1,6 +1,6 @@
 package api.notes.controllers;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -40,7 +40,7 @@ public class UsersController extends BaseController {
 
 	 @PostMapping
 	 public ResponseEntity<?> postUser(@Valid @RequestBody UserPostCustomRequest input) {
-		HashMap<String, Object> data = new HashMap<>();
+		LinkedHashMap<String, Object> data = new LinkedHashMap<>();
 		data.put("user_email", input.getEmail());
 		data.put("user_password", input.getPassword());
 		 

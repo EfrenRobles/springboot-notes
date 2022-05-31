@@ -1,7 +1,7 @@
 package api.notes.controllers;
 
 import java.util.Date;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,7 +28,7 @@ public class AuthController extends BaseController {
 
 	@PostMapping("login")
 	public ResponseEntity<?> login(@Valid @RequestBody LoginCustomRequest request) {
-		HashMap<String, Object> data = new HashMap<>();
+		LinkedHashMap<String, Object> data = new LinkedHashMap<>();
 		UsersEntiry user = getUser(request.getEmail());
 		
 		boolean pass = (user == null);
@@ -38,7 +38,7 @@ public class AuthController extends BaseController {
 		}
 		
 		if (pass) {
-			data = new HashMap<>();
+			data = new LinkedHashMap<>();
 			data.put("status", "ERROR");
 			data.put("error", "Username or Password does not match");
 
