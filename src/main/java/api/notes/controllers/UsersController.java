@@ -1,7 +1,5 @@
 package api.notes.controllers;
 
-import java.util.LinkedHashMap;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -31,10 +29,13 @@ public class UsersController extends BaseResponse {
 
 	 @PostMapping
 	 public ResponseEntity<?> postUser(@Valid @RequestBody UserPostCustomRequest input) {
-		LinkedHashMap<String, Object> data = new LinkedHashMap<>();
-		data.put("user_email", input.getUserEmail());
-		data.put("user_password", input.getUserPassword());
+
+		Object result = userService.add(input);
 		 
-		return onSuccess(userService.usersPostUseCase(data), HttpStatus.ACCEPTED);
+		if (result == null) {
+			return onSuccess("The username is already registered", HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+		 
+		return onSuccess(result, HttpStatus.ACCEPTED);
 	 }
 }

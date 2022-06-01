@@ -16,10 +16,14 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.security.crypto.bcrypt.BCrypt;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "users")
 public class UsersEntiry {
 
@@ -46,61 +50,5 @@ public class UsersEntiry {
 	private Set<NotesEntity> notes;
 
 	private String token;
-
-	public UUID getUserId() {
-		return userId;
-	}
-
-	public void setUserId(UUID user_id) {
-		this.userId = user_id;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String user_name) {
-		this.userName = user_name;
-	}
-
-	public String getUserPassword() {
-		return userPassword;
-	}
-
-	public void setUserPassword(String user_password) {
-		this.userPassword = user_password;
-	}
-
-	public Set<NotesEntity> getNotes() {
-		return notes;
-	}
-
-	public void setNotes(Set<NotesEntity> notes) {
-		this.notes = notes;
-	}
-
-	public Timestamp getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(Timestamp created_at) {
-		this.createdAt = created_at;
-	}
-
-	public Timestamp getUpdatedAt() {
-		return updatedAt;
-	}
-
-	public void setUpdatedAt(Timestamp updated_at) {
-		this.updatedAt = updated_at;
-	}
-
-	public String getUserToken() {
-		return token;
-	}
-
-	public void setUserToken(String token) {
-		this.token = token;
-	}
 
 }
