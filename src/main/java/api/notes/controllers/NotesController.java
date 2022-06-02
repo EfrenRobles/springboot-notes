@@ -1,6 +1,6 @@
 package api.notes.controllers;
 
-import java.util.LinkedHashMap;
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,10 +16,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import api.notes.entities.UsersEntiry;
 import api.notes.request.notes.NotesPatchCustomRequest;
 import api.notes.request.notes.NotesPostCustomRequest;
 import api.notes.services.NotesService;
@@ -43,7 +41,14 @@ public class NotesController extends BaseResponse {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getNote(@PathVariable UUID id, HttpServletRequest request) {
-		return onSuccess(noteService.getNotesFromUserWithId(id, userService.getUserByToken(request)), HttpStatus.OK);
+		
+		Optional<Object> result = Optional.ofNullable(noteService.getNotesFromUserWithId(id, userService.getUserByToken(request)));
+		
+		return result.map(user -> onSuccess(user, HttpStatus.OK))
+			.orElse(ResponseEntity
+			.status(HttpStatus.UNPROCESSABLE_ENTITY)
+			.body(onError("The note does not exist"))
+		);
 	}
 		
 	@PostMapping
@@ -54,30 +59,24 @@ public class NotesController extends BaseResponse {
 	@PatchMapping("/{id}")
 	public ResponseEntity<?> patchNote(@PathVariable UUID id, @Valid @RequestBody NotesPatchCustomRequest input, HttpServletRequest request) {
 
-		Object result = noteService.update(id, input, userService.getUserByToken(request));
+		Optional<Object> result = Optional.ofNullable(noteService.update(id, input, userService.getUserByToken(request)));
 		
-		if (result == null) {
-			return onFail("Note does not exist", HttpStatus.UNPROCESSABLE_ENTITY);
-		}
-		
-		return onSuccess(
-			result,
-			HttpStatus.OK
+		return result.map(user -> onSuccess(user, HttpStatus.OK))
+			.orElse(ResponseEntity
+			.status(HttpStatus.UNPROCESSABLE_ENTITY)
+			.body(onError("The note does not exist"))
 		);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deletehNote(@PathVariable UUID id, HttpServletRequest request) {
 
-		Object result = noteService.deleteByIdWithUser(id, userService.getUserByToken(request));
+		Optional<Object> result = Optional.ofNullable(noteService.deleteByIdWithUser(id, userService.getUserByToken(request)));
 		
-		if (result == null) {
-			return onFail("Note does not exist", HttpStatus.UNPROCESSABLE_ENTITY);
-		}
-		
-		return onSuccess(
-			result,
-			HttpStatus.NO_CONTENT
+		return result.map(user -> onSuccess(user, HttpStatus.OK))
+			.orElse(ResponseEntity
+			.status(HttpStatus.UNPROCESSABLE_ENTITY)
+			.body(onError("The note does not exist"))
 		);
 	}
 

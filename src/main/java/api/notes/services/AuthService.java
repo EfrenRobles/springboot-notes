@@ -40,7 +40,6 @@ public class AuthService {
 		return data;
 	}
 	
-	
 	private String getJWTToken(String username) {
 		String secretKey = "mySecretKey";
 		List<GrantedAuthority> grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER");

@@ -1,5 +1,7 @@
 package api.notes.controllers;
 
+import java.util.Optional;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -30,12 +32,12 @@ public class UsersController extends BaseResponse {
 	 @PostMapping
 	 public ResponseEntity<?> postUser(@Valid @RequestBody UserPostCustomRequest input) {
 
-		Object result = userService.add(input);
-		 
-		if (result == null) {
-			return onSuccess("The username is already registered", HttpStatus.UNPROCESSABLE_ENTITY);
-		}
-		 
-		return onSuccess(result, HttpStatus.ACCEPTED);
+		Optional<Object> result = Optional.ofNullable(userService.add(input));
+		
+		return result.map(user -> onSuccess(user, HttpStatus.OK))
+			.orElse(ResponseEntity
+				.status(HttpStatus.UNPROCESSABLE_ENTITY)
+				.body(onError("The username is already registered"))
+			);
 	 }
 }

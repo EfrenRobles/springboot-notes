@@ -1,5 +1,7 @@
 package api.notes.controllers;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import api.notes.request.login.LoginCustomRequest;
-import api.notes.request.user.UserPostCustomRequest;
 import api.notes.services.AuthService;
 
 @RestController
@@ -24,13 +25,13 @@ public class AuthController extends BaseResponse {
 	@PostMapping("login")
 	public ResponseEntity<?> login(@Valid @RequestBody LoginCustomRequest request) {
 		
-		Object result = authService.login(request);
+		Optional<Object> result = Optional.ofNullable(authService.login(request));
 		
-		if (result == null) {
-			return onFail("Username or Password does not match", HttpStatus.UNPROCESSABLE_ENTITY);
-		}
-		
-		return onSuccess(result, HttpStatus.OK);
+		return result.map(user -> onSuccess(user, HttpStatus.OK))
+			.orElse(ResponseEntity
+				.status(HttpStatus.UNPROCESSABLE_ENTITY)
+				.body(onError("Username or Password does not match"))
+			);
 	}
 
 }

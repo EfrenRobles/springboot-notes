@@ -1,6 +1,7 @@
 package api.notes.entities;
 
 import java.sql.Timestamp;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -20,7 +21,15 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@SuppressWarnings("unused")
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "notes")
 public class NotesEntity {
 	@Id
@@ -29,73 +38,20 @@ public class NotesEntity {
 	private UUID noteId;
 
 	@Column(name = "note_title", nullable = false, length = 50)
-	private String note_title;
+	private String noteTitle;
 
 	@Column(name = "note_message", nullable = false, length = 1000)
-	private String note_message;
+	private String noteMessage;
 
 	@CreationTimestamp
-	private Timestamp created_at;
+	private Timestamp createdAt;
 
 	@UpdateTimestamp
-	private Timestamp updated_at;
+	private Timestamp updatedAt;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", referencedColumnName="user_id", nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JsonBackReference  
 	private UsersEntiry users;
-
-	public UUID getNoteID() {
-		return noteId;
-	}
-	
-	public void setNoteID(UUID note_id) {
-		this.noteId = note_id;
-	}
-	
-	public String getNoteTitle() {
-		return note_title;
-	}
-
-	public void setNoteTitle(String note_title) {
-		this.note_title = note_title;
-	}
-
-	public String getNoteMessage() {
-		return note_message;
-	}
-
-	public void setNoteMessage(String note_message) {
-		this.note_message = note_message;
-	}
-	
-    public UsersEntiry getUsers()
-    {
-        return users;
-    }
-
-    public void setUsers(UsersEntiry users)
-    {
-        this.users = users;
-    }
-
-	public Timestamp getCreatedAt() {
-		return created_at;
-	}
-
-	public void setCreatedAt(Timestamp created_at) {
-		this.created_at = created_at;
-	}
-
-	public Timestamp getUpdatedAt() {
-		return updated_at;
-	}
-
-	public void setUpdatedAt(Timestamp updated_at) {
-		this.updated_at = updated_at;
-	}
-    
-    
-    
 }
